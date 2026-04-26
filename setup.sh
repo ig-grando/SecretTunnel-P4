@@ -5,7 +5,8 @@ sudo apt update -y
 sudo apt-get install -y \
     tcpreplay \
     tmux \
-    python3-pip
+    python3-pip \
+    tcpdump
 
 sudo pip install -r requirements.txt
 

@@ -39,11 +39,12 @@ desenvolvimento destre projeto:
 ```bash
 cd project
 ./setup.sh
-source .bashrc
+source ~/.bashrc
 ```
 
 Com as dependências devidamente instaladas podemos inicializar a simulação do switch:
 ```bash
+cd simulator
 # Compila o código P4
 ./p4_build.sh secret
 # Inicializa o control plane e o simulador Tofino
