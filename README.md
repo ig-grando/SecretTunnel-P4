@@ -72,10 +72,10 @@ Para enviar dados pelo switch, utilize as seguintes interfaces já configuradas:
 
 Nome da porta | Interface Virtual | MAC
 ------- | ------- | ----
-1/0 | veth2 | 00:00:00:00:00:01 
-2/0 | veth4 | 00:00:00:00:00:02
-3/0 | veth6 | 00:00:00:00:00:03
-4/0 | veth8 | 00:00:00:00:00:04
+1/0 | veth0 | 00:00:00:00:00:01 
+2/0 | veth8 | 00:00:00:00:00:02
+3/0 | veth16 | 00:00:00:00:00:03
+4/0 | veth24 | 00:00:00:00:00:04
 
 Todas as portas são interagíveis através de interfaces ethernet virtuais
 inicializadas junto com o switch.
@@ -98,7 +98,7 @@ Você deve construir uma maneira de gravar esse token no switch.
 Com o token gravado no switch, crie também um mecanismo para transportar
 uma mensagem qualquer, que também carrega o token secreto.
 Caso o token secreto seja o mesmo do gravado dentro do switch, a mensagem
-trafega normalmente. Do contrário ele é dropado.
+trafega normalmente, do contrário ela é dropada.
 
 Exemplos:
 ```txt

@@ -69,7 +69,7 @@ control SwitchIngress(
             secret_values.write(index, value);
 
         Para dropar um pacote:
-            ig_dprsr_md.drop_ctl = 0;
+            ig_dprsr_md.drop_ctl = 1;
         */
     }
 }
