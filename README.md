@@ -156,3 +156,8 @@ E quaisquer scripts adicionais utilizados para testar o trabalho.
 - Tente fazer o simples (a funcionalidade é simples)
 - Não precisa mexer no control plane
 - É programação baixo nível, não tenha medo de fazer código feio
+
+
+### Dúvidas
+
+Enviem suas dúvidas pra: evsenoski@inf.ufpr.br
