@@ -25,7 +25,7 @@ Utilizaremos um container Docker com o simulador já instalado e configurado.
 
 Primeiro passo após clonar este repositório é subir o container e acessá-lo:
 ```bash
-cd trabalho_p4_redes1_2026_01/simulador
+cd trabalho_p4_redes1_2026_01/simulator
 # Baixa a imagem do container
 docker compose pull
 # Inicia o container
