@@ -29,7 +29,7 @@ ARCH=tofino
 cd $SDE_INSTALL/bin
 
 # Compile P4 code into binaries
-./p4c $P4JOIN_SRC/src/$PROGRAM/$PROGRAM.p4 -b $ARCH -o $SDE_INSTALL/share/p4/targets/$ARCH/$PROGRAM --std p4-16 --Wdisable
+./p4c $PROJECT_SRC/src/$PROGRAM/$PROGRAM.p4 -b $ARCH -o $SDE_INSTALL/share/p4/targets/$ARCH/$PROGRAM --std p4-16 --Wdisable
 
 # Generate conf files to simulator
 ./p4c-gen-bfrt-conf --name $PROGRAM --device $ARCH --pipe pipe --testdir $SDE_INSTALL/share/p4/targets/$ARCH/$PROGRAM --installdir $SDE_INSTALL/share/p4/targets/$ARCH/$PROGRAM

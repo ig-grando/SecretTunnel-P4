@@ -10,8 +10,8 @@ sudo apt-get install -y \
 
 sudo pip install -r requirements.txt
 
-if [ -z "$P4JOIN_SRC" ]; then
-    echo export P4JOIN_SRC=$(pwd) >> ~/.bashrc
+if [ -z "$PROJECT_SRC" ]; then
+    echo export PROJECT_SRC=$(pwd) >> ~/.bashrc
 fi
 
 source ~/.bashrc
