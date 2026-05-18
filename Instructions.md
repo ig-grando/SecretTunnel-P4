@@ -54,7 +54,7 @@ cd simulator
 Isto irá abrir um painel do TMUX, onde o painel da esquerda executa o software de control
 plane, e o painél da direita executa o simulador do Tofino.
 Não será necessário interagir com nenhum desse componentes, então é simplesmente
-sair dessa sessão do TMUX (CTRL + b + d).
+sair dessa sessão do TMUX (CTRL + b, depois + d).
 
 Caso queira brincar com o simulador e voltar pra sessão TMUX:
 ```bash
