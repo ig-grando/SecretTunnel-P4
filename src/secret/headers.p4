@@ -18,12 +18,17 @@ typedef bit<16> ether_type_t;
 header ethernet_h {
     mac_addr_t dst_addr;
     mac_addr_t src_addr;
-    bit<16> ether_type;
+    bit<16> ether_type; // indica qual protocolo estamos usando (no caso um custom)
 }
 
+header custom_t {
+    bit<8> operacao; // ia usar 1 mas ele reclama de byte align
+    bit<128> token;
+}
 
 struct header_t {
     ethernet_h ethernet;
+    custom_t segredo;
 }
 
 // Variáveis metadados auxiliares, caso ache necessário utilizá-las

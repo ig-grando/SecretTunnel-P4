@@ -2,8 +2,9 @@ from scapy.all import Ether, Raw, sendp
 
 # cria pacote ethernet simples
 pkt = Ether(
-    dst="00:00:00:00:00:04",   # deve sair na porta 3 (veth16)
-    src="11:11:11:11:11:11"
+    dst="00:00:00:00:00:04",   # deve sair na porta 4 (veth24)
+    src="11:11:11:11:11:11",
+    type=0x4321
 ) / Raw(b"hello")
 
 print("Enviando pacote...")

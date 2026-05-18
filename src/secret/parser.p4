@@ -4,6 +4,7 @@
 /* ===================================================== Tofino Parsers ===================================================== */
 
 /* -------------------- NÃO ALTERAR NENHUM DOS COMPONENTES DESTE BLOCO ----------------------------- */
+/* -------------------- isso aqui é configuração do switch e hardware tlgd----------------------------- */
 
 parser TofinoIngressParser(
         packet_in pkt,
@@ -42,6 +43,8 @@ parser TofinoEgressParser(
 // ---------------------------------------------------------------------------
 // Ingress Parser
 // ---------------------------------------------------------------------------
+
+// packet_in é default da linguagem, tem alguns métodos: como o extract
 parser SwitchIngressParser(packet_in pkt,
     /* User */
     out header_t        hdr,
@@ -49,17 +52,26 @@ parser SwitchIngressParser(packet_in pkt,
     /* Intrinsic */
     out ingress_intrinsic_metadata_t ig_intr_md)
 {
-    TofinoIngressParser() tofino_parser;
+    TofinoIngressParser() tofino_parser; // instancia o objeto
 
-    state start {
-        tofino_parser.apply(pkt, ig_intr_md);
-        transition parse_ethernet;
+    // O parser é uma máquina de estados, então deve-se definir eles
+    state start { 
+        tofino_parser.apply(pkt, ig_intr_md); // lê os metadados do pacote
+        transition parse_ethernet;            // vai pro próximo bloco
     }
 
     state parse_ethernet {
-        meta = {0, 0, 0, 0, 0};
+        meta = {0, 0, 0, 0, 0};             // no headers temos esse struct auxiliar que podemos usar 
         pkt.extract(hdr.ethernet);
-        /* DICA: utilizar transition select */
+        
+        transition select(hdr.ethernet.ether_type) {
+            0x4321: parse_secreto;
+            default: accept;
+        }
+    }
+
+    state parse_secreto {
+        pkt.extract(hdr.segredo);
         transition accept;
     }
 }

@@ -30,7 +30,7 @@ Comandos docker:
 - abre um terminal dentro do container, pode abrir vários
 
 
-precisei rodar isso pra o switch fazer o forward, pode rodar no terminal do container
+precisei rodar isso pra o switch fazer o forward, pode rodar no terminal do container, antes de estar em ~/project
 
 /home/dev/open-p4studio/install/bin/bfshell -b /home/dev/project/src/secret/setup.py
 
