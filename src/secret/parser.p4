@@ -62,7 +62,7 @@ parser SwitchIngressParser(packet_in pkt,
 
     state parse_ethernet {
         meta = {0, 0, 0, 0, 0};             // no headers temos esse struct auxiliar que podemos usar 
-        pkt.extract(hdr.ethernet);
+        pkt.extract(hdr.ethernet);          // lê os próximos bytes e coloca no campo indicado da struct
         
         transition select(hdr.ethernet.ether_type) {
             0x4321: parse_secreto;
