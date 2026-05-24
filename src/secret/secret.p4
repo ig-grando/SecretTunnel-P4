@@ -10,8 +10,9 @@
 #include "headers.p4"
 #include "parser.p4"
 
-#define GUARDAR 1
 #define COMPARAR 0
+#define GUARDAR 1
+#define DROPAR 2
 
 
 /* ===================================================== Ingress ===================================================== */
@@ -39,13 +40,6 @@ control SwitchIngress(
 
     action miss(bit<3> drop) {
         ig_dprsr_md.drop_ctl = drop;
-    }
-
-    action guardar_segredos() {
-        secret_values1.write(0, hdr.segredo.t1);
-        secret_values2.write(0, hdr.segredo.t2);
-        secret_values3.write(0, hdr.segredo.t3);
-        secret_values4.write(0, hdr.segredo.t4);
     }
 
     table forward {
@@ -86,7 +80,11 @@ control SwitchIngress(
             ig_dprsr_md.drop_ctl = 1;
         */
 
+        miss(1);
+        ig_dprsr_md.drop_ctl = 1;
+
         if(hdr.segredo.isValid()) {
+            ig_dprsr_md.drop_ctl = 1;
             if(hdr.segredo.operacao == GUARDAR) {
                 secret_values4.write(0, hdr.segredo.t4);
                 secret_values2.write(0, hdr.segredo.t2);
@@ -111,6 +109,8 @@ control SwitchIngress(
                 if(!flag) {
                     ig_dprsr_md.drop_ctl = 1;
                 }
+            } else {
+                ig_dprsr_md.drop_ctl = 1;
             }
         } else {
             ig_dprsr_md.drop_ctl = 1;
