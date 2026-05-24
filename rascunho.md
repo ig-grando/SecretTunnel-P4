@@ -73,5 +73,5 @@ bfshell> exit
 As gurias colocaram tudo no apply, até os read, um embaixo do outro, a única coisa que foi separada foi a parte da condição que criaram um bit flag e depois verificamos e passamos ou não o pacote.
 Pode mandar quebrado no script python de 32 em 32, daí tem q mudar meu header  
 Várias pessoas tiveram que rodar aquele script extra  
-Não precisa tem nada no ethernet  
+Não precisa ter nada no ethernet  
 Pode colocar tudo no apply não precisa colocar no action  

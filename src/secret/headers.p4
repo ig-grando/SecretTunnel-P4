@@ -23,7 +23,10 @@ header ethernet_h {
 
 header custom_t {
     bit<8> operacao; // ia usar 1 mas ele reclama de byte align
-    bit<128> token;
+    bit<32> t1;
+    bit<32> t2;
+    bit<32> t3;
+    bit<32> t4;
 }
 
 struct header_t {

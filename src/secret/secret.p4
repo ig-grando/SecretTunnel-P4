@@ -10,6 +10,9 @@
 #include "headers.p4"
 #include "parser.p4"
 
+#define GUARDAR 1
+#define COMPARAR 0
+
 
 /* ===================================================== Ingress ===================================================== */
 
@@ -24,10 +27,10 @@ control SwitchIngress(
     inout ingress_intrinsic_metadata_for_deparser_t     ig_dprsr_md,
     inout ingress_intrinsic_metadata_for_tm_t           ig_tm_md)
 {
-    Register<bit<32>, bit<1>>(4) secret_values;
-    //Register<bit<32>, bit<1>>(1) secret_values2;
-    //Register<bit<32>, bit<1>>(1) secret_values3;
-    //Register<bit<32>, bit<1>>(1) secret_values4;
+    Register<bit<32>, bit<1>>(1) secret_values1;
+    Register<bit<32>, bit<1>>(1) secret_values2;
+    Register<bit<32>, bit<1>>(1) secret_values3;
+    Register<bit<32>, bit<1>>(1) secret_values4;
 
     /* Forward */
     action hit(PortId_t port) {
@@ -38,16 +41,11 @@ control SwitchIngress(
         ig_dprsr_md.drop_ctl = drop;
     }
 
-    action guardar_token(bit<32> t1, bit<32> t2, bit<32> t3, bit<32> t4) {
-        /*secret_values1.write(0, t1);
-        secret_values2.write(0, t2);
-        secret_values3.write(0, t3);
-        secret_values4.write(0, t4);*/
-    }
-
-    action carregar_token() {
-        meta.aux1 = secret_values.read(0);
-
+    action guardar_segredos() {
+        secret_values1.write(0, hdr.segredo.t1);
+        secret_values2.write(0, hdr.segredo.t2);
+        secret_values3.write(0, hdr.segredo.t3);
+        secret_values4.write(0, hdr.segredo.t4);
     }
 
     table forward {
@@ -88,26 +86,35 @@ control SwitchIngress(
             ig_dprsr_md.drop_ctl = 1;
         */
 
-    if(hdr.segredo.isValid()) {
-        if(hdr.segredo.operacao == 1) {
-            guardar_token(hdr.segredo.token[31:0], hdr.segredo.token[63:32], hdr.segredo.token[95:64], hdr.segredo.token[127:96]);
-        
-        } else if(hdr.segredo.operacao == 0) {
+        if(hdr.segredo.isValid()) {
+            if(hdr.segredo.operacao == GUARDAR) {
+                secret_values4.write(0, hdr.segredo.t4);
+                secret_values2.write(0, hdr.segredo.t2);
+                secret_values1.write(0, hdr.segredo.t1);
+                secret_values3.write(0, hdr.segredo.t3);
 
-            carregar_token();
-        }
+                // KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK mudar a ordem deu certo wtf
+                
+            } else if(hdr.segredo.operacao == COMPARAR) {
+                bool flag = true;
 
-        // if too complex bruh
-        if (!(meta.aux1 == hdr.segredo.token[31:0]
-        )) 
-        {
+                if(secret_values1.read(0) != hdr.segredo.t1) {
+                    flag = false;
+                } else if(secret_values2.read(0) != hdr.segredo.t2) {
+                    flag = false;
+                } else if(secret_values3.read(0) != hdr.segredo.t3) {
+                    flag = false;
+                } else if(secret_values4.read(0) != hdr.segredo.t4) {
+                    flag = false;
+                }
+
+                if(!flag) {
+                    ig_dprsr_md.drop_ctl = 1;
+                }
+            }
+        } else {
             ig_dprsr_md.drop_ctl = 1;
         }
-    } else {
-        ig_dprsr_md.drop_ctl = 1;
-        }
-
-
     }
 }
 
