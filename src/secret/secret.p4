@@ -80,33 +80,22 @@ control SwitchIngress(
             ig_dprsr_md.drop_ctl = 1;
         */
 
-        miss(1);
-        ig_dprsr_md.drop_ctl = 1;
-
         if(hdr.segredo.isValid()) {
-            ig_dprsr_md.drop_ctl = 1;
             if(hdr.segredo.operacao == GUARDAR) {
                 secret_values4.write(0, hdr.segredo.t4);
                 secret_values2.write(0, hdr.segredo.t2);
                 secret_values1.write(0, hdr.segredo.t1);
                 secret_values3.write(0, hdr.segredo.t3);
 
-                // KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK mudar a ordem deu certo wtf
-                
+                // KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK mudar a ordem deu certo wtf   
             } else if(hdr.segredo.operacao == COMPARAR) {
-                bool flag = true;
-
                 if(secret_values1.read(0) != hdr.segredo.t1) {
-                    flag = false;
+                    ig_dprsr_md.drop_ctl = 1;
                 } else if(secret_values2.read(0) != hdr.segredo.t2) {
-                    flag = false;
+                    ig_dprsr_md.drop_ctl = 1;
                 } else if(secret_values3.read(0) != hdr.segredo.t3) {
-                    flag = false;
+                    ig_dprsr_md.drop_ctl = 1;
                 } else if(secret_values4.read(0) != hdr.segredo.t4) {
-                    flag = false;
-                }
-
-                if(!flag) {
                     ig_dprsr_md.drop_ctl = 1;
                 }
             } else {

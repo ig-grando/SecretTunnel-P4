@@ -31,7 +31,7 @@ docker compose pull
 # Inicia o container
 docker compose up -d
 # Abre uma shell Bash dentro do container
-docker exec -ti p4studio bash
+    docker exec -ti p4studio bash
 ```
 
 Uma vez dentro do container, precisamos instalar as dependências de
